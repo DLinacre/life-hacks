@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify site integrity
+        run: |
+          echo "Checking required files…"
+          for f in index.html manifest.webmanifest sw.js css/style.css js/app.js js/hacks.js assets/banner.png; do
+            test -f "$f" || { echo "::error::missing $f"; exit 1; }
+          done
+          echo "Sanity-checking hacks registry exports…"
+          grep -q "export const HACKS" js/hacks.js || { echo "::error::HACKS export missing"; exit 1; }
+          echo "All checks passed ✓"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
