@@ -161,5 +161,91 @@ export const HACKS = [
     related: [
       { label: '▶ Play AFTERGLOW', url: 'https://dlinacre.github.io/afterglow/' }
     ]
+  },
+  {
+    id: 'regrow-veg-from-scraps',
+    title: 'Regrow Veg from Kitchen Scraps',
+    emoji: '🌱',
+    summary: 'Stop binning the ends of spring onions, lettuce and celery — pop them in water on a windowsill and grow free food again and again.',
+    tags: ['regrow', 'vegetables', 'scraps', 'kitchen', 'garden', 'save money', 'food', 'windowsill', 'sustainable', 'diy'],
+    difficulty: 'Easy',
+    time: '5 min + growing',
+    updated: '2026-08-06',
+    hero: 'assets/hack-regrow-hero.png',
+    safety: [
+      'Change the water every 1–2 days — cloudy or smelly water means bacteria; give the glass a rinse.',
+      'If a scrap turns mushy, slimy or mouldy instead of sprouting, bin it and start fresh — don\'t eat it.',
+      'Wash regrown greens before eating, just like shop-bought.'
+    ],
+    materials: [
+      'Leftover vegetable bases: spring onion (scallion) root ends, a romaine/cos lettuce heart, or a celery base',
+      'A small glass or jar',
+      'Fresh water',
+      'A sunny windowsill',
+      'Optional: a small pot of soil to plant them on later'
+    ],
+    why: [
+      'The base of many vegetables still contains the plant\'s growing point (the meristem) and, in root veg ends, dormant roots — the living tissue that produces new growth.',
+      'Give that tissue what it lost when it was cut — water and light — and it simply carries on growing, pushing out fresh leaves and stalks from stored energy.',
+      'Spring onions are the champions: the white root end regrows green tops in days and you can harvest repeatedly, so one bunch keeps giving for weeks.',
+      'It costs nothing, cuts food waste, and turns offcuts you\'d have thrown away into a rolling free supply of garnish and greens.'
+    ],
+    steps: [
+      { title: 'Save the right offcut', body: 'Keep the bottom ~3–5 cm of spring onions (with the stringy roots), the intact heart of a romaine lettuce, or the base of a celery bunch. Don\'t trim the roots off.' },
+      { title: 'Stand it in water', body: 'Place the cut base root-down in a glass with about 2–3 cm of water — enough to cover the roots but not drown the top.',
+        img: 'assets/hack-regrow-hero.png' },
+      { title: 'Give it light', body: 'Put the glass on a bright, sunny windowsill. Warmth and light are what trigger new growth.' },
+      { title: 'Refresh the water', body: 'Change the water every day or two to keep it clear and oxygenated — this is the single biggest thing that prevents rot.' },
+      { title: 'Harvest or pot on', body: 'Spring onion tops are ready to snip in about a week — just cut what you need and let them regrow. Lettuce and celery push out tender new leaves from the centre; once roots are strong you can plant them in soil to keep them going long-term.' }
+    ],
+    sources: [
+      { label: 'Plant meristem & vegetative regrowth (overview)', url: 'https://en.wikipedia.org/wiki/Meristem' }
+    ],
+    related: [
+      { label: '▶ Play AFTERGLOW', url: 'https://dlinacre.github.io/afterglow/' }
+    ]
+  },
+  {
+    id: 'diy-wool-dryer-balls',
+    title: 'DIY Wool Dryer Balls',
+    emoji: '🧺',
+    summary: 'Make reusable wool dryer balls that cut drying time, soften laundry and replace disposable dryer sheets — saving money load after load.',
+    tags: ['laundry', 'dryer', 'wool', 'diy', 'save money', 'reusable', 'eco', 'dryer sheets', 'home'],
+    difficulty: 'Easy',
+    time: '30 min + felting',
+    updated: '2026-08-06',
+    hero: 'assets/hack-dryerballs-hero.png',
+    safety: [
+      'Use 100% wool yarn — synthetic/acrylic yarn will not felt and can melt in a hot dryer.',
+      'Check the yarn is not labelled "superwash" or "machine washable"; that treatment stops wool from felting.',
+      'If you like a scent, add just 1–2 drops of essential oil and let it dry before use — never soak the balls in oil, as concentrated oils on fabric in a hot dryer are a fire risk.'
+    ],
+    materials: [
+      'A skein of 100% wool yarn (not superwash) — one skein makes several balls',
+      'A pair of old tights, a leg of pantyhose, or a sock',
+      'Cotton string or a few knots to tie sections',
+      'Scissors',
+      'Your washing machine and dryer (to felt them)'
+    ],
+    why: [
+      'As the balls tumble, they bounce between layers of wet laundry, creating gaps so hot air circulates better — clothes dry noticeably faster, which uses less energy per load.',
+      'That same tumbling agitation relaxes fibres and reduces static and wrinkles, so laundry comes out softer without any chemical softener.',
+      'They replace single-use dryer sheets entirely: buy the wool once and reuse the balls for 1,000+ loads, so the cost per wash drops to almost nothing.',
+      'Felting is the key step — repeated heat, moisture and agitation lock the wool fibres together into a dense, springy ball that won\'t unravel in the dryer.'
+    ],
+    steps: [
+      { title: 'Wind a ball', body: 'Wrap wool yarn around two fingers about 15 times, slip it off, then wrap crossways around the middle. Keep wrapping in changing directions until you have a firm ball roughly the size of a tennis ball.' },
+      { title: 'Secure the end', body: 'Tuck the loose end under several strands with your fingers or a crochet hook so it won\'t come loose. Make 3–4 balls in total for a normal load.',
+        img: 'assets/hack-dryerballs-hero.png' },
+      { title: 'Bag them up', body: 'Drop each ball into the leg of a pair of old tights and tie a tight knot with string between each one, so you end up with a "caterpillar" of separated balls.' },
+      { title: 'Felt them', body: 'Run the whole string through a hot wash and then a hot dryer cycle (or a couple of cycles). The heat and agitation felt the wool so the strands fuse together.' },
+      { title: 'Free and use', body: 'Snip the string and remove the balls — the surface should look fuzzy and matted, not stringy. Toss 3–4 into the dryer with every load. That\'s it: faster drying and no more dryer sheets.' }
+    ],
+    sources: [
+      { label: 'Wool felting (how heat + agitation fuse fibres)', url: 'https://en.wikipedia.org/wiki/Felt' }
+    ],
+    related: [
+      { label: '▶ Play AFTERGLOW', url: 'https://dlinacre.github.io/afterglow/' }
+    ]
   }
 ];

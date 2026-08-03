@@ -3,7 +3,7 @@
  * Cache-first for the app shell so it works offline (true PWA). Bump CACHE
  * whenever you ship changes so clients pick up the new version.
  */
-const CACHE = 'life-hacks-v2';
+const CACHE = 'life-hacks-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -16,7 +16,9 @@ const ASSETS = [
   './assets/hack-stylus-hero.png',
   './assets/step-diagram.png',
   './assets/hack-wifi-hero.png',
-  './assets/hack-scissors-hero.png'
+  './assets/hack-scissors-hero.png',
+  './assets/hack-regrow-hero.png',
+  './assets/hack-dryerballs-hero.png'
 ];
 
 self.addEventListener('install', e => {
