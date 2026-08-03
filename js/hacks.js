@@ -247,5 +247,122 @@ export const HACKS = [
     related: [
       { label: '▶ Play AFTERGLOW', url: 'https://dlinacre.github.io/afterglow/' }
     ]
+  },
+  {
+    id: 'rescue-a-stuck-zip',
+    title: 'Rescue a Stuck Zip',
+    emoji: '👖',
+    summary: 'A jammed or sticky zip doesn\'t mean a ruined jacket or bag — rub a graphite pencil or bar of soap on the teeth and it glides again.',
+    tags: ['zip', 'zipper', 'repair', 'clothes', 'bag', 'jacket', 'fix', 'save money', 'graphite', 'soap', 'diy'],
+    difficulty: 'Easy',
+    time: '2 min',
+    updated: '2026-08-07',
+    hero: 'assets/hack-zip-hero.png',
+    safety: [
+      'Be gentle — yanking a stuck slider can rip the teeth off the fabric, which is much harder to fix.',
+      'Graphite can smudge, so on pale or delicate fabric use clear soap or lip balm instead of a pencil.',
+      'If teeth are actually bent, ease them straight with pliers first; lubricant only fixes friction, not damage.'
+    ],
+    materials: [
+      'A graphite pencil (a soft one, e.g. 2B, works best), OR',
+      'A bar of dry soap, a white candle, or lip balm',
+      'Optional: needle-nose pliers for bent teeth',
+      'A cloth to wipe off any excess'
+    ],
+    why: [
+      'Zips stick because of friction — grit, a rough spot, or a stiff slider gripping the teeth as it passes.',
+      'Graphite is a natural dry lubricant: the "lead" in a pencil is soft carbon that slides between surfaces and reduces that friction without attracting dirt the way oil would.',
+      'Soap, wax and lip balm work the same way — they coat the teeth with a slippery layer so the slider glides over them instead of catching.',
+      'A two-minute rub can save a whole garment or bag from the bin, which is exactly the kind of tiny fix that adds up to real money over a year.'
+    ],
+    steps: [
+      { title: 'Ease off the tension', body: 'Stop pulling hard. Hold the fabric flat on both sides of the slider so the teeth line up straight and aren\'t bunched.' },
+      { title: 'Rub on the lubricant', body: 'Firmly scribble a graphite pencil back and forth over the teeth on both sides, right where the slider is stuck. No pencil? Rub a dry bar of soap, a candle, or lip balm along the teeth instead.',
+        img: 'assets/hack-zip-hero.png' },
+      { title: 'Work the slider gently', body: 'Wiggle the slider up and back in small movements — don\'t force it. As the lubricant works in, it should start to move more freely.' },
+      { title: 'Free it fully', body: 'Once it loosens, run the slider slowly along the whole zip a couple of times to spread the lubricant over all the teeth.' },
+      { title: 'Wipe and check', body: 'Wipe off any excess graphite or soap with a cloth. If the slider still gapes open after closing, gently squeeze its sides with pliers a tiny amount to restore its grip.' }
+    ],
+    sources: [
+      { label: 'Graphite as a dry lubricant (overview)', url: 'https://en.wikipedia.org/wiki/Graphite#Lubricant' }
+    ],
+    related: [
+      { label: '▶ Play AFTERGLOW', url: 'https://dlinacre.github.io/afterglow/' }
+    ]
+  },
+  {
+    id: 'revive-dried-out-markers',
+    title: 'Revive Dried-Out Markers',
+    emoji: '🖊️',
+    summary: 'Don\'t bin a marker that\'s gone faint — a few minutes soaking the tip in rubbing alcohol dissolves the dried ink and brings felt tips back to life.',
+    tags: ['markers', 'felt tip', 'pens', 'revive', 'alcohol', 'save money', 'stationery', 'reuse', 'diy', 'craft'],
+    difficulty: 'Easy',
+    time: '5–10 min',
+    updated: '2026-08-07',
+    hero: 'assets/hack-markers-hero.png',
+    safety: [
+      'Rubbing (isopropyl) alcohol is flammable — keep it away from flames and use in a ventilated space.',
+      'Avoid skin and eye contact; wash hands afterwards and keep it away from children and pets.',
+      'This revives alcohol- and water-based markers whose ink has dried out. It won\'t refill a marker that\'s genuinely run out of pigment.'
+    ],
+    materials: [
+      'The dried-out marker(s)',
+      'Rubbing alcohol (isopropyl alcohol) — or for water-based markers, plain warm water works too',
+      'A small cup or the marker\'s own cap',
+      'A paper towel',
+      'Optional: a small dropper or pipette'
+    ],
+    why: [
+      'Most markers don\'t "run out" — the solvent that keeps the ink liquid simply evaporates, leaving dried pigment clogging the felt tip.',
+      'Alcohol is the solvent in many markers, so adding a little back re-dissolves that dried ink and lets it flow through the tip again.',
+      'Standing the tip in a few drops lets capillary action pull the solvent up into the fibres, softening the clog from the tip inward.',
+      'A bottle of rubbing alcohol costs pennies per use and can rescue a whole tin of markers — far cheaper than replacing them.'
+    ],
+    steps: [
+      { title: 'Identify the marker', body: 'Alcohol-based markers (like art markers) and permanent markers respond to rubbing alcohol. For basic water-based/washable markers, use warm water instead.' },
+      { title: 'Add a little solvent', body: 'Put just a small amount of rubbing alcohol in a cup or the marker\'s cap — enough to cover the very tip, no more.' },
+      { title: 'Stand the tip in it', body: 'Rest the marker tip-down in the alcohol for a few minutes. You\'ll often see ink swirl out as the dried pigment re-dissolves.',
+        img: 'assets/hack-markers-hero.png' },
+      { title: 'For sealed markers, add from behind', body: 'If the tip won\'t soak easily, pop off the back end and add a few drops of alcohol directly onto the ink reservoir, then re-seal.' },
+      { title: 'Cap and rest', body: 'Wipe the tip on paper towel, put the cap on firmly, and leave the marker horizontal for 15–30 minutes so the solvent spreads evenly.' },
+      { title: 'Test it', body: 'Scribble on scrap paper — the ink should flow again. Repeat once if it\'s still faint. Storing markers horizontally with caps on tightly helps them last much longer.' }
+    ],
+    sources: [
+      { label: 'Isopropyl alcohol as a solvent (overview)', url: 'https://en.wikipedia.org/wiki/Isopropyl_alcohol' }
+    ],
+    related: [
+      { label: '▶ Play AFTERGLOW', url: 'https://dlinacre.github.io/afterglow/' }
+    ]
+  },
+  {
+    id: 'cost-per-use-calculator',
+    title: 'The "Cost Per Use" Rule',
+    emoji: '🧦',
+    summary: 'A simple mindset hack for deciding cheap vs. quality: divide the price by how many times you\'ll really use it, and let the true cost decide.',
+    tags: ['money', 'budgeting', 'shopping', 'save money', 'value', 'mindset', 'cost per use', 'buy it for life', 'framework'],
+    difficulty: 'Easy',
+    time: '1 min',
+    updated: '2026-08-07',
+    hero: 'assets/hack-costperuse-hero.png',
+    why: [
+      'The sticker price is misleading. What actually matters is what each use costs you: Cost Per Use = Price ÷ Number of Uses.',
+      'A £10 pair of socks that lasts 20 washes costs 50p per wear. A £30 pair that lasts 300 wears costs 10p per wear — five times cheaper in reality, despite the bigger price tag.',
+      'This is why "buy cheap, buy twice" is so often true: the cheap option can have a higher cost per use once you count how quickly it wears out or gets replaced.',
+      'It also protects you the other way — if you\'ll only use something once or twice, the cheap version genuinely is the smart buy. The rule stops you overspending on quality you won\'t get value from.'
+    ],
+    steps: [
+      { title: 'Estimate the lifetime uses', body: 'Before buying, honestly guess how many times you\'ll use the item. A daily coat over 3 years is ~1,000 wears; a fancy dress for one wedding is 1–2.' },
+      { title: 'Do the simple sum', body: 'Divide the price by that number of uses. £120 boots ÷ 600 wears = 20p per wear. £25 boots ÷ 60 wears = 42p per wear.',
+        img: 'assets/hack-costperuse-hero.png' },
+      { title: 'Factor in repairs & running costs', body: 'Add anything the item will cost you over its life — refills, batteries, energy, repairs — and subtract resale value if you\'ll sell it on. Then re-check the per-use figure.' },
+      { title: 'Compare like for like', body: 'Put the cheap and quality options side by side on cost per use, not sticker price. The lower per-use number is usually the smarter buy.' },
+      { title: 'Apply the "use it a lot? invest" test', body: 'Rule of thumb: things you use daily (bed, shoes, chair, phone) reward quality; things you rarely use reward buying cheap. Spend where the uses pile up.' }
+    ],
+    sources: [
+      { label: 'Cost per wear / cost per use (consumer value concept)', url: 'https://en.wikipedia.org/wiki/Cost_per_wear' }
+    ],
+    related: [
+      { label: '▶ Play AFTERGLOW', url: 'https://dlinacre.github.io/afterglow/' }
+    ]
   }
 ];
