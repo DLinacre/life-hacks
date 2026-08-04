@@ -27,6 +27,7 @@
 export const HACKS = [
   {
     id: 'diy-capacitive-stylus',
+    category: 'Maker',
     title: 'DIY Capacitive Stylus (from a pen + a fuse)',
     emoji: '🖊️',
     summary: 'Turn an old clicky pen and a glass electronics fuse into a smooth, dry stylus for phones and tablets — perfect as an AFTERGLOW pen.',
@@ -81,6 +82,7 @@ export const HACKS = [
   ,
   {
     id: 'foil-wifi-booster',
+    category: 'Tech',
     title: 'Tin-foil Wi-Fi Booster',
     emoji: '📶',
     summary: 'A curved sheet of kitchen foil behind your router reflects the signal toward the rooms you actually use — a free 5-minute range boost.',
@@ -123,6 +125,7 @@ export const HACKS = [
   },
   {
     id: 'sharpen-scissors-with-foil',
+    category: 'Home',
     title: 'Sharpen Scissors with Kitchen Foil',
     emoji: '✂️',
     summary: 'Bring dull scissors back to life in under a minute by cutting through folded aluminium foil — no sharpening stone needed.',
@@ -164,6 +167,7 @@ export const HACKS = [
   },
   {
     id: 'regrow-veg-from-scraps',
+    category: 'Money',
     title: 'Regrow Veg from Kitchen Scraps',
     emoji: '🌱',
     summary: 'Stop binning the ends of spring onions, lettuce and celery — pop them in water on a windowsill and grow free food again and again.',
@@ -207,6 +211,7 @@ export const HACKS = [
   },
   {
     id: 'diy-wool-dryer-balls',
+    category: 'Money',
     title: 'DIY Wool Dryer Balls',
     emoji: '🧺',
     summary: 'Make reusable wool dryer balls that cut drying time, soften laundry and replace disposable dryer sheets — saving money load after load.',
@@ -250,6 +255,7 @@ export const HACKS = [
   },
   {
     id: 'rescue-a-stuck-zip',
+    category: 'Home',
     title: 'Rescue a Stuck Zip',
     emoji: '👖',
     summary: 'A jammed or sticky zip doesn\'t mean a ruined jacket or bag — rub a graphite pencil or bar of soap on the teeth and it glides again.',
@@ -292,6 +298,7 @@ export const HACKS = [
   },
   {
     id: 'revive-dried-out-markers',
+    category: 'Home',
     title: 'Revive Dried-Out Markers',
     emoji: '🖊️',
     summary: 'Don\'t bin a marker that\'s gone faint — a few minutes soaking the tip in rubbing alcohol dissolves the dried ink and brings felt tips back to life.',
@@ -336,6 +343,7 @@ export const HACKS = [
   },
   {
     id: 'cost-per-use-calculator',
+    category: 'Money',
     title: 'The "Cost Per Use" Rule',
     emoji: '🧦',
     summary: 'A simple mindset hack for deciding cheap vs. quality: divide the price by how many times you\'ll really use it, and let the true cost decide.',
@@ -367,6 +375,7 @@ export const HACKS = [
   },
   {
     id: 'test-charger-speed',
+    category: 'Tech',
     title: 'Find Your Fastest Charger & Cable',
     emoji: '⚡',
     summary: 'Got a drawer full of USB-C cables and no idea which is fastest? This built-in tool measures how quickly each charger + cable charges your phone and ranks them for you.',

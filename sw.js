@@ -3,7 +3,7 @@
  * Cache-first for the app shell so it works offline (true PWA). Bump CACHE
  * whenever you ship changes so clients pick up the new version.
  */
-const CACHE = 'life-hacks-v5';
+const CACHE = 'life-hacks-v6';
 const ASSETS = [
   './',
   './index.html',
