@@ -364,5 +364,44 @@ export const HACKS = [
     related: [
       { label: '▶ Play AFTERGLOW', url: 'https://dlinacre.github.io/afterglow/' }
     ]
+  },
+  {
+    id: 'test-charger-speed',
+    title: 'Find Your Fastest Charger & Cable',
+    emoji: '⚡',
+    summary: 'Got a drawer full of USB-C cables and no idea which is fastest? This built-in tool measures how quickly each charger + cable charges your phone and ranks them for you.',
+    tags: ['charger', 'cable', 'usb-c', 'charging', 'speed', 'phone', 'battery', 'test', 'tool', 'fast charging'],
+    difficulty: 'Easy',
+    time: '2–5 min each',
+    updated: '2026-08-08',
+    hero: 'assets/hack-charge-hero.png',
+    safety: [
+      'This is a comparison tool, not a lab instrument. The watt/mA figures are battery-side estimates — great for ranking your own cables, not for quoting exact charger specs.',
+      'Only ever charge with the charger and cable your phone came with, or reputable branded replacements. Cheap, uncertified USB-C cables can charge slowly or run hot.',
+      'If any cable or plug gets hot, frays, or the connector feels loose, stop using it.'
+    ],
+    materials: [
+      'Your phone',
+      'The USB-C chargers and cables you want to compare',
+      'A couple of minutes per cable'
+    ],
+    why: [
+      'Not all USB-C cables are equal: thin or uncertified cables have more resistance and can\'t carry as much current, so the same charger fills your battery more slowly through a "bad" cable than a good one.',
+      'The honest way to compare them from a web page is to measure the thing you actually care about — how fast your battery percentage climbs — and turn that into an estimated mA and watts using your battery\'s capacity.',
+      'A web page can\'t read a cable\'s data speed or the exact USB-PD wattage it negotiated (browsers have no access to that hardware detail), so measuring real charge rate is both the fairest and the only reliable method available.',
+      'Run the same short test on each cable in the same battery range and you get a clean league table of your fastest to slowest combos.'
+    ],
+    steps: [
+      { title: 'Open the tester', body: 'Tap the "Open the Charge Speed Tester" button below. On Android/Chrome it reads your battery automatically; on iPhone use the built-in Manual stopwatch mode.' },
+      { title: 'Plug in a charger + cable', body: 'Connect the first charger and cable and make sure the phone starts charging.' },
+      { title: 'Enter your battery capacity', body: 'Pop in your phone\'s battery capacity in mAh (search your model, e.g. "Pixel 8 battery mAh"). This lets the tool estimate watts.' },
+      { title: 'Run a 2–5 minute test', body: 'Start the test and leave the phone alone. The tool tracks your % over time and calculates the charge rate, estimated mA and watts.' },
+      { title: 'Label & save it', body: 'Give the combo a name like "65W brick + short braided cable" and save it to your comparison table.' },
+      { title: 'Repeat & compare', body: 'Test your other cables in the same battery range (e.g. always 30–60%). The tool ranks them 🥇🥈🥉 so you instantly see your fastest setup.' }
+    ],
+    related: [
+      { label: '⚡ Open the Charge Speed Tester', url: 'charge-test.html' },
+      { label: '▶ Play AFTERGLOW', url: 'https://dlinacre.github.io/afterglow/' }
+    ]
   }
 ];

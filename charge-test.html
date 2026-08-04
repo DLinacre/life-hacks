@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#05060a" />
+<title>Charge Speed Tester · Life Hacks</title>
+<meta name="description" content="Measure how fast each USB-C charger and cable charges your phone, and rank your cables from fastest to slowest." />
+<link rel="icon" href="assets/icon-512.png" />
+<style>
+  :root{
+    --bg:#05060a; --surface:#0e1220; --surface2:#141a2c;
+    --ink:#eef3ff; --muted:#9fb0d0; --line:rgba(150,180,255,.14);
+    --cyan:#5ad0ff; --violet:#9b7bff; --grad:linear-gradient(135deg,#3b6dff,#8f5bff);
+    --ok:#1bbd7e; --warn:#e0a53b; --bad:#e0603b; --maxw:760px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{
+    background:radial-gradient(120% 90% at 50% 0%, #0b1022 0%, #070912 55%, #04050a 100%) fixed;
+    color:var(--ink); min-height:100vh;
+    font-family:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,-apple-system,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums;
+  }
+  a{color:var(--cyan);text-decoration:none;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:16px 16px 48px;}
+  .back{display:inline-block;color:var(--muted);font-size:14px;font-weight:600;margin:4px 0 14px;}
+  .back:hover{color:var(--cyan);}
+  h1{font-size:24px;line-height:1.2;display:flex;align-items:center;gap:10px;}
+  .lead{color:var(--muted);font-size:15px;margin:8px 0 4px;}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0;}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;font-weight:700;}
+
+  /* battery ring */
+  .ring-wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center;}
+  .ring{position:relative;width:172px;height:172px;flex:none;}
+  .ring svg{transform:rotate(-90deg);}
+  .ring .pct{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .ring .pct .n{font-size:40px;font-weight:800;line-height:1;}
+  .ring .pct .s{font-size:12px;color:var(--muted);margin-top:4px;letter-spacing:.1em;text-transform:uppercase;}
+  .stat-list{flex:1;min-width:200px;display:grid;gap:10px;}
+  .stat{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
+  .stat:last-child{border-bottom:none;}
+  .stat .k{color:var(--muted);font-size:14px;}
+  .stat .v{font-weight:700;font-size:15px;text-align:right;}
+
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;
+    padding:4px 11px;border-radius:20px;}
+  .chip.on{background:rgba(27,189,126,.16);color:#7ff0c0;border:1px solid rgba(27,189,126,.4);}
+  .chip.off{background:rgba(224,96,59,.14);color:#ffb59e;border:1px solid rgba(224,96,59,.4);}
+  .chip.dot::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;
+    box-shadow:0 0 8px currentColor;}
+
+  label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px;}
+  input,select{width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:12px;
+    color:var(--ink);font-family:inherit;font-size:16px;padding:12px 14px;outline:none;}
+  input:focus,select:focus{border-color:rgba(150,180,255,.4);}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+  @media(max-width:460px){.row{grid-template-columns:1fr;}}
+
+  .btn{display:inline-block;width:100%;font-family:inherit;font-weight:700;font-size:16px;
+    padding:15px 20px;border-radius:14px;border:1px solid var(--line);color:var(--ink);
+    background:var(--surface2);cursor:pointer;transition:transform .08s,filter .15s;}
+  .btn:active{transform:scale(.98);}
+  .btn.primary{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 6px 22px rgba(90,110,255,.35);}
+  .btn.danger{background:rgba(224,96,59,.16);border-color:rgba(224,96,59,.4);color:#ffb59e;}
+  .btn:disabled{opacity:.5;cursor:default;}
+  .btn.small{width:auto;font-size:13px;padding:8px 14px;}
+
+  .live{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0;text-align:center;}
+  @media(max-width:460px){.live{grid-template-columns:1fr 1fr;}}
+  .live .box{background:var(--surface2);border:1px solid var(--line);border-radius:13px;padding:12px 8px;}
+  .live .box .n{font-size:22px;font-weight:800;}
+  .live .box .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;}
+  .live .box .n .u{font-size:13px;opacity:.6;font-weight:600;}
+  .progress{height:8px;background:var(--surface2);border-radius:6px;overflow:hidden;margin:6px 0 2px;}
+  .progress > i{display:block;height:100%;width:0;background:var(--grad);transition:width .3s;}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);}
+  th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;}
+  td.num,th.num{text-align:right;font-weight:700;}
+  .medal{font-size:15px;}
+  .del{cursor:pointer;color:#ffb59e;background:none;border:none;font-size:15px;padding:4px;}
+  .empty{color:var(--muted);text-align:center;padding:18px 6px;}
+
+  .callout{border-radius:14px;padding:13px 16px;margin:14px 0;border:1px solid;font-size:14px;}
+  .callout.info{background:rgba(80,140,255,.10);border-color:rgba(120,170,255,.32);}
+  .callout.warn{background:rgba(224,165,59,.10);border-color:rgba(255,190,90,.35);color:#ffe6bf;}
+  .callout .t{font-weight:700;margin-bottom:6px;}
+  .callout ul{margin-left:18px;} .callout li{margin-bottom:4px;}
+
+  details{margin-top:10px;} summary{cursor:pointer;font-weight:700;color:var(--cyan);font-size:14px;}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin-top:12px;font-size:13px;}
+  .kv .k{color:var(--muted);} .kv .v{word-break:break-word;text-align:right;}
+  .foot{text-align:center;color:var(--muted);font-size:13px;margin-top:26px;padding-top:18px;border-top:1px solid var(--line);}
+  .hide{display:none!important;}
+  .seg{display:flex;gap:8px;margin-bottom:14px;}
+  .seg button{flex:1;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);
+    color:var(--muted);font-family:inherit;font-weight:700;font-size:13.5px;cursor:pointer;}
+  .seg button.active{background:var(--grad);border-color:transparent;color:#fff;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← All hacks</a>
+  <h1>⚡ Charge Speed Tester</h1>
+  <p class="lead">Find out which USB-C charger + cable combo charges your phone the fastest. Plug in, run a short test, label the cable, and compare them all — ranked from fastest to slowest.</p>
+
+  <!-- support / mode -->
+  <div id="supportBanner"></div>
+
+  <div class="seg" id="modeSeg">
+    <button data-mode="auto" class="active">Auto (Battery sensor)</button>
+    <button data-mode="manual">Manual stopwatch</button>
+  </div>
+
+  <!-- LIVE STATUS (auto mode) -->
+  <div class="card" id="statusCard">
+    <h2>Live battery</h2>
+    <div class="ring-wrap">
+      <div class="ring">
+        <svg width="172" height="172" viewBox="0 0 172 172">
+          <circle cx="86" cy="86" r="76" fill="none" stroke="rgba(150,180,255,.12)" stroke-width="14"/>
+          <circle id="ringFill" cx="86" cy="86" r="76" fill="none" stroke="url(#g)" stroke-width="14"
+                  stroke-linecap="round" stroke-dasharray="477.5" stroke-dashoffset="477.5"/>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b6dff"/><stop offset="1" stop-color="#8f5bff"/>
+          </linearGradient></defs>
+        </svg>
+        <div class="pct"><div class="n" id="battPct">–</div><div class="s">battery</div></div>
+      </div>
+      <div class="stat-list">
+        <div class="stat"><span class="k">Status</span><span class="v" id="battState">—</span></div>
+        <div class="stat"><span class="k">Phone's own estimate to full</span><span class="v" id="battToFull">—</span></div>
+        <div class="stat"><span class="k">Sensor resolution</span><span class="v" id="battRes">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTO TEST -->
+  <div class="card" id="autoTest">
+    <h2>Run a charge-speed test</h2>
+    <div class="row">
+      <div>
+        <label for="capacity">Your battery capacity (mAh)</label>
+        <input id="capacity" type="number" inputmode="numeric" value="4000" min="500" max="12000" />
+      </div>
+      <div>
+        <label for="duration">Test length</label>
+        <select id="duration">
+          <option value="60">1 minute (quick)</option>
+          <option value="120" selected>2 minutes (recommended)</option>
+          <option value="300">5 minutes (most accurate)</option>
+          <option value="600">10 minutes</option>
+        </select>
+      </div>
+    </div>
+    <div class="progress"><i id="testBar"></i></div>
+    <div class="live">
+      <div class="box"><div class="n" id="lElapsed">0<span class="u">s</span></div><div class="l">elapsed</div></div>
+      <div class="box"><div class="n" id="lRate">–</div><div class="l">%/min</div></div>
+      <div class="box"><div class="n" id="lPower">–</div><div class="l">est. watts</div></div>
+    </div>
+    <button class="btn primary" id="btnTest">Start test</button>
+    <p class="lead" id="testHint" style="margin-top:10px;font-size:13px;"></p>
+  </div>
+
+  <!-- MANUAL TEST -->
+  <div class="card hide" id="manualTest">
+    <h2>Manual stopwatch test</h2>
+    <p class="lead" style="font-size:13px;margin-bottom:12px;">Works on any phone (including iPhone). Note your battery % from the OS, wait a set time, then enter the new %.</p>
+    <div class="row">
+      <div><label for="mStart">Start battery %</label><input id="mStart" type="number" inputmode="numeric" min="0" max="100" placeholder="e.g. 30"/></div>
+      <div><label for="mEnd">End battery %</label><input id="mEnd" type="number" inputmode="numeric" min="0" max="100" placeholder="e.g. 42"/></div>
+    </div>
+    <div class="row">
+      <div><label for="mMin">Minutes elapsed</label><input id="mMin" type="number" inputmode="decimal" min="0.5" step="0.5" placeholder="e.g. 10"/></div>
+      <div><label for="mCap">Battery capacity (mAh)</label><input id="mCap" type="number" inputmode="numeric" value="4000"/></div>
+    </div>
+    <button class="btn primary" id="btnManual">Calculate & save</button>
+  </div>
+
+  <!-- SAVE RESULT PROMPT -->
+  <div class="card hide" id="saveCard">
+    <h2>Save this result</h2>
+    <div class="live">
+      <div class="box"><div class="n" id="rRate">–</div><div class="l">%/min</div></div>
+      <div class="box"><div class="n" id="rCurrent">–</div><div class="l">est. mA</div></div>
+      <div class="box"><div class="n" id="rPower">–</div><div class="l">est. watts</div></div>
+    </div>
+    <label for="labelInput">Label this charger + cable</label>
+    <input id="labelInput" type="text" maxlength="48" placeholder="e.g. Anker 65W + short braided cable" />
+    <div style="height:12px"></div>
+    <button class="btn primary" id="btnSave">Save to comparison</button>
+  </div>
+
+  <!-- COMPARISON -->
+  <div class="card">
+    <h2>Your cable rankings 🏁</h2>
+    <div id="rankBody"></div>
+    <div id="rankActions" class="hide" style="margin-top:12px;text-align:right;">
+      <button class="btn danger small" id="btnClear">Clear all</button>
+    </div>
+  </div>
+
+  <!-- FAIR TEST TIPS -->
+  <div class="callout info">
+    <div class="t">📏 For a fair comparison</div>
+    <ul>
+      <li>Test every cable in the <b>same battery range</b> (e.g. always 30–60%). Charging naturally slows above ~80%.</li>
+      <li>Keep the phone, screen brightness and starting % as similar as you can between tests.</li>
+      <li>Longer tests are more accurate — the battery sensor only reports whole %, so 2–5 minutes gives a steadier reading.</li>
+      <li>Let the phone cool between tests; a hot phone throttles charging.</li>
+    </ul>
+  </div>
+
+  <!-- DEVICE INFO -->
+  <div class="card">
+    <h2>Device &amp; battery info</h2>
+    <div class="kv" id="deviceInfo"></div>
+    <details>
+      <summary>How this works &amp; honest limits</summary>
+      <p class="lead" style="font-size:13px;margin-top:10px;">
+        This measures how quickly your <b>battery percentage</b> rises while charging, then estimates the current (mA) and power (watts) reaching the battery using the capacity you enter. It's the fair way to rank chargers &amp; cables.
+      </p>
+      <p class="lead" style="font-size:13px;margin-top:8px;">
+        A web page <b>cannot</b> read the cable's data-transfer speed or the exact USB-PD wattage your charger negotiated — the browser has no access to that hardware detail. The watt figure here is a battery-side estimate (using ~3.85 V nominal), so treat it as a comparison number, not a lab measurement. On iPhone/Safari the battery sensor is unavailable, so use Manual mode.
+      </p>
+    </details>
+  </div>
+
+  <p class="foot">Part of <a href="index.html">Life Hacks</a> · <a href="https://dlinacre.github.io/afterglow/" target="_blank" rel="noopener">Play AFTERGLOW</a></p>
+</div>
+
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const KEY = 'life-hacks-charge-results';
+const RING_C = 2 * Math.PI * 76; // circumference
+
+let battery = null, hasBattery = false;
+let mode = 'auto';
+let sampling = null, samples = [], testEndAt = 0, wakeLock = null;
+let lastResult = null;
+
+/* ---------- battery bootstrap ---------- */
+async function initBattery(){
+  if ('getBattery' in navigator){
+    try{
+      battery = await navigator.getBattery();
+      hasBattery = true;
+      ['levelchange','chargingchange','chargingtimechange','dischargingtimechange']
+        .forEach(ev => battery.addEventListener(ev, refreshStatus));
+      refreshStatus();
+    }catch(e){ hasBattery = false; }
+  }
+  renderSupport();
+  renderDeviceInfo();
+  renderRankings();
+}
+
+function renderSupport(){
+  const b = $('#supportBanner');
+  if (hasBattery){
+    b.innerHTML = `<div class="callout info"><div class="t">✅ Battery sensor detected</div>Plug in your charger, then run a test below. Repeat for each cable to build your ranking.</div>`;
+  } else {
+    b.innerHTML = `<div class="callout warn"><div class="t">ℹ️ Battery sensor not available on this browser</div>
+      This is normal on iPhone/Safari and some desktop browsers. No worries — switch to <b>Manual stopwatch</b> mode (already selected) and you can still measure and rank every cable.</div>`;
+    setMode('manual');
+    $('#modeSeg').classList.add('hide'); // auto not possible; keep it clean
+  }
+}
+
+function fmtTime(sec){
+  if (!isFinite(sec) || sec <= 0) return '—';
+  const h = Math.floor(sec/3600), m = Math.round((sec%3600)/60);
+  if (h) return `${h}h ${m}m`;
+  if (sec < 90) return `${Math.round(sec)}s`;
+  return `${m} min`;
+}
+function levelResolution(){
+  // infer whether the sensor reports finer than 1%
+  const l = battery.level*100;
+  return Math.abs(l - Math.round(l)) > 0.001 ? 'fine (<1%)' : 'whole 1% steps';
+}
+function refreshStatus(){
+  if (!hasBattery) return;
+  const pct = Math.round(battery.level*100);
+  $('#battPct').textContent = pct + '%';
+  $('#ringFill').style.strokeDashoffset = RING_C * (1 - battery.level);
+  const charging = battery.charging;
+  $('#battState').innerHTML = charging
+    ? `<span class="chip on dot">Charging</span>`
+    : `<span class="chip off dot">Not charging</span>`;
+  $('#battToFull').textContent = charging ? fmtTime(battery.chargingTime) : '—';
+  $('#battRes').textContent = levelResolution();
+  renderDeviceInfo();
+}
+
+/* ---------- device info ---------- */
+function renderDeviceInfo(){
+  const rows = [];
+  const add = (k,v)=> rows.push(`<span class="k">${esc(k)}</span><span class="v">${esc(v)}</span>`);
+  if (hasBattery){
+    add('Battery level', Math.round(battery.level*100)+'%');
+    add('Charging', battery.charging ? 'Yes' : 'No');
+    add('Time to full', battery.charging ? fmtTime(battery.chargingTime) : '—');
+    add('Time to empty', !battery.charging ? fmtTime(battery.dischargingTime) : '—');
+  }
+  const c = navigator.connection || navigator.webkitConnection;
+  if (c){
+    if (c.effectiveType) add('Network type', c.effectiveType);
+    if (typeof c.downlink === 'number') add('Downlink', c.downlink + ' Mbps');
+  }
+  if (navigator.hardwareConcurrency) add('CPU cores', navigator.hardwareConcurrency);
+  if (navigator.deviceMemory) add('Device memory', navigator.deviceMemory + ' GB');
+  add('Screen', `${screen.width}×${screen.height} @ ${window.devicePixelRatio||1}×`);
+  add('Platform', navigator.platform || '—');
+  add('Browser', shortUA(navigator.userAgent));
+  $('#deviceInfo').innerHTML = rows.join('');
+}
+function shortUA(ua){
+  const m = ua.match(/(Chrome|CriOS|Firefox|Edg|SamsungBrowser|Safari)\/[\d.]+/);
+  const os = ua.match(/\(([^)]+)\)/);
+  return (m?m[0].replace('CriOS','Chrome'):'Browser') + (os?` · ${os[1].split(';')[0]}`:'');
+}
+
+/* ---------- mode switch ---------- */
+function setMode(m){
+  mode = m;
+  document.querySelectorAll('#modeSeg button').forEach(b=>b.classList.toggle('active', b.dataset.mode===m));
+  $('#statusCard').classList.toggle('hide', m!=='auto');
+  $('#autoTest').classList.toggle('hide', m!=='auto');
+  $('#manualTest').classList.toggle('hide', m!=='manual');
+}
+document.querySelectorAll('#modeSeg button').forEach(b=> b.onclick = ()=> setMode(b.dataset.mode));
+
+/* ---------- AUTO test ---------- */
+$('#btnTest').onclick = ()=> sampling ? stopTest(true) : startTest();
+
+async function startTest(){
+  if (!battery.charging){
+    $('#testHint').innerHTML = '⚠️ Your phone isn\'t charging. Plug in the charger &amp; cable, then start the test.';
+    return;
+  }
+  samples = [{ t: performance.now(), lvl: battery.level }];
+  const dur = +$('#duration').value;
+  testEndAt = performance.now() + dur*1000;
+  $('#btnTest').textContent = 'Stop test';
+  $('#btnTest').classList.remove('primary'); $('#btnTest').classList.add('danger');
+  $('#testHint').textContent = 'Keep this page open and the phone plugged in…';
+  // keep screen awake if possible
+  try{ if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); }catch(e){}
+  const onLevel = ()=> samples.push({ t: performance.now(), lvl: battery.level });
+  battery.addEventListener('levelchange', onLevel);
+  startTest._onLevel = onLevel;
+
+  sampling = setInterval(()=>{
+    samples.push({ t: performance.now(), lvl: battery.level });
+    const elapsed = (performance.now() - samples[0].t)/1000;
+    const rate = slopePerMin();
+    $('#lElapsed').innerHTML = Math.round(elapsed) + '<span class="u">s</span>';
+    $('#lRate').textContent = rate!=null ? rate.toFixed(2) : '–';
+    const p = estPower(rate);
+    $('#lPower').innerHTML = p ? p.watts.toFixed(1)+'<span class="u">W</span>' : '–';
+    $('#testBar').style.width = Math.min(100, elapsed/dur*100) + '%';
+    if (performance.now() >= testEndAt) stopTest(false);
+  }, 1000);
+}
+
+function stopTest(userStopped){
+  clearInterval(sampling); sampling = null;
+  if (startTest._onLevel) battery.removeEventListener('levelchange', startTest._onLevel);
+  if (wakeLock){ try{ wakeLock.release(); }catch(e){} wakeLock = null; }
+  $('#btnTest').textContent = 'Start test';
+  $('#btnTest').classList.add('primary'); $('#btnTest').classList.remove('danger');
+  samples.push({ t: performance.now(), lvl: battery.level });
+
+  const rate = slopePerMin();
+  const dt = (samples[samples.length-1].t - samples[0].t)/1000;
+  if (rate == null || rate <= 0){
+    $('#testHint').innerHTML = '🤔 No measurable rise yet. Try a <b>longer test</b>, a lower battery range, or check the cable is seated properly.';
+    return;
+  }
+  const p = estPower(rate);
+  lastResult = {
+    rate: +rate.toFixed(3),
+    mA: p ? Math.round(p.mA) : null,
+    watts: p ? +p.watts.toFixed(1) : null,
+    startPct: Math.round(samples[0].lvl*100),
+    endPct: Math.round(samples[samples.length-1].lvl*100),
+    durSec: Math.round(dt),
+    date: Date.now()
+  };
+  showSave(lastResult);
+  $('#testHint').textContent = userStopped ? 'Stopped early — result captured.' : 'Test complete!';
+}
+
+// least-squares slope of level(%) vs time(min)
+function slopePerMin(){
+  if (samples.length < 2) return null;
+  const t0 = samples[0].t;
+  const xs = samples.map(s => (s.t - t0)/60000);          // minutes
+  const ys = samples.map(s => s.lvl*100);                  // percent
+  const n = xs.length;
+  const mx = xs.reduce((a,b)=>a+b,0)/n, my = ys.reduce((a,b)=>a+b,0)/n;
+  let num=0, den=0;
+  for (let i=0;i<n;i++){ num += (xs[i]-mx)*(ys[i]-my); den += (xs[i]-mx)**2; }
+  if (den === 0) return null;
+  return num/den; // %/min
+}
+function estPower(ratePerMin){
+  const cap = +$('#capacity').value;
+  if (!ratePerMin || !cap) return null;
+  const mA = (ratePerMin/100) * cap * 60;   // mAh per hour = mA
+  const watts = mA/1000 * 3.85;             // nominal Li-ion cell voltage
+  return { mA, watts };
+}
+
+/* ---------- MANUAL test ---------- */
+$('#btnManual').onclick = ()=>{
+  const s=+$('#mStart').value, e=+$('#mEnd').value, min=+$('#mMin').value, cap=+$('#mCap').value;
+  if (isNaN(s)||isNaN(e)||isNaN(min)||min<=0){ alert('Enter start %, end % and minutes.'); return; }
+  if (e<=s){ alert('End % should be higher than start % (make sure it was charging).'); return; }
+  const rate = (e-s)/min;
+  const mA = (rate/100)*cap*60;
+  const watts = mA/1000*3.85;
+  lastResult = { rate:+rate.toFixed(3), mA:Math.round(mA), watts:+watts.toFixed(1),
+    startPct:s, endPct:e, durSec:Math.round(min*60), date:Date.now() };
+  showSave(lastResult);
+  $('#saveCard').scrollIntoView({behavior:'smooth'});
+};
+
+/* ---------- save + rankings ---------- */
+function showSave(r){
+  $('#rRate').textContent = r.rate.toFixed(2);
+  $('#rCurrent').textContent = r.mA!=null ? r.mA : '–';
+  $('#rPower').innerHTML = r.watts!=null ? r.watts.toFixed(1)+'<span class="u">W</span>' : '–';
+  $('#saveCard').classList.remove('hide');
+}
+$('#btnSave').onclick = ()=>{
+  if (!lastResult) return;
+  const label = ($('#labelInput').value || '').trim() || ('Cable ' + (load().length+1));
+  const all = load(); all.push({ ...lastResult, label });
+  save(all);
+  $('#labelInput').value=''; $('#saveCard').classList.add('hide');
+  renderRankings();
+};
+$('#btnClear').onclick = ()=>{ if(confirm('Clear all saved cable results?')){ save([]); renderRankings(); } };
+
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } }
+function save(a){ try{ localStorage.setItem(KEY, JSON.stringify(a)); }catch(e){} }
+
+function renderRankings(){
+  const all = load().sort((a,b)=> b.rate - a.rate);
+  const body = $('#rankBody');
+  $('#rankActions').classList.toggle('hide', all.length===0);
+  if (!all.length){ body.innerHTML = `<p class="empty">No results yet. Run a test above to add your first cable.</p>`; return; }
+  const medals = ['🥇','🥈','🥉'];
+  body.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>#</th><th>Charger + cable</th>
+        <th class="num">%/min</th><th class="num">~mA</th><th class="num">~W</th><th></th>
+      </tr></thead>
+      <tbody>
+        ${all.map((r,i)=>`
+          <tr>
+            <td class="medal">${medals[i]||(i+1)}</td>
+            <td>${esc(r.label)}<br><span style="color:var(--muted);font-size:12px">${r.startPct}→${r.endPct}% · ${Math.round(r.durSec/60*10)/10} min</span></td>
+            <td class="num">${r.rate.toFixed(2)}</td>
+            <td class="num">${r.mA!=null?r.mA:'–'}</td>
+            <td class="num">${r.watts!=null?r.watts.toFixed(1):'–'}</td>
+            <td><button class="del" data-i="${r.date}" title="Delete">✕</button></td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
+  body.querySelectorAll('.del').forEach(btn=> btn.onclick = ()=>{
+    save(load().filter(x=> String(x.date)!==btn.dataset.i)); renderRankings();
+  });
+}
+
+/* ---------- go ---------- */
+initBattery();
+</script>
+</body>
+</html>
